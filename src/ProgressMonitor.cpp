@@ -13,9 +13,11 @@ void ProgressMonitor::print_progress_percentage()
 {
     float percentage = std::floor(float(m_finished_tasks)/float(m_num_tasks)*100.0);
 
-    if (percentage != m_last_percentage_logged) std::cout << m_message << percentage << "%" << std::endl;
-    
-    m_last_percentage_logged = percentage;
+    if (percentage != m_last_percentage_logged)
+    {
+        std::cout << m_message << percentage << "%\";
+        m_last_percentage_logged = percentage;
+    }
 }
 
 
