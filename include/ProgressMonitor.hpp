@@ -12,7 +12,6 @@ class ProgressMonitor
     std::string m_message;
 public:
     void add_finished();
-    //unsigned int get_num_tasks();
     void print_progress_percentage();
     ProgressMonitor() = delete;
     ProgressMonitor(unsigned int num_tasks);

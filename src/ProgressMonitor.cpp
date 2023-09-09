@@ -15,7 +15,7 @@ void ProgressMonitor::print_progress_percentage()
 
     if (percentage != m_last_percentage_logged)
     {
-        std::cout << m_message << percentage << "%\";
+        std::cout << m_message << percentage << "%\n";
         m_last_percentage_logged = percentage;
     }
 }
