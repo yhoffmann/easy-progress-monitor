@@ -25,7 +25,7 @@ ProgressMonitor::ProgressMonitor (unsigned int num_tasks)
 }
 
 
-ProgressMonitor::ProgressMonitor (unsigned int num_tasks, std::string message)
+ProgressMonitor::ProgressMonitor (unsigned int num_tasks, const std::string& message)
     : m_num_tasks(num_tasks), m_finished_tasks(0), m_last_percentage_logged(0), m_message(message)
 {
 }

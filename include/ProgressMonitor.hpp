@@ -14,7 +14,7 @@ public:
     void add_finished();
     //unsigned int get_num_tasks();
     void print_progress_percentage();
-    ProgressMonitor(unsigned int num_tasks);
-    ProgressMonitor(unsigned int num_tasks, std::string message);
     ProgressMonitor() = delete;
+    ProgressMonitor(unsigned int num_tasks);
+    ProgressMonitor(unsigned int num_tasks, const std::string& message);
 };
