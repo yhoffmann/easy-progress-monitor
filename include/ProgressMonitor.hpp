@@ -32,13 +32,13 @@ public:
 };
 
 
-void ProgressMonitor::add_finished() {
+inline void ProgressMonitor::add_finished() {
     std::lock_guard<std::mutex> lck(m_mtx);
     m_finished_tasks++;
 }
 
 
-void ProgressMonitor::print_progress_percentage(std::ostream& stream) {
+inline void ProgressMonitor::print_progress_percentage(std::ostream& stream) {
     std::lock_guard<std::mutex> lck(m_mtx);
     float percentage = std::floor(float(m_finished_tasks)/float(m_num_tasks)*100.0);
 
@@ -49,7 +49,7 @@ void ProgressMonitor::print_progress_percentage(std::ostream& stream) {
 }
 
 
-ProgressMonitor::ProgressMonitor(size_t num_tasks, const std::string& message)
+inline ProgressMonitor::ProgressMonitor(size_t num_tasks, const std::string& message)
     : m_num_tasks(num_tasks)
     , m_finished_tasks(0)
     , m_last_percentage_logged(0)
