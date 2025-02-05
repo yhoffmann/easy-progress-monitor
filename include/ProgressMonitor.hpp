@@ -16,14 +16,17 @@ protected:
     std::mutex m_mtx;
     size_t m_num_tasks;
     size_t m_finished_tasks;
-    float m_last_percentage_logged;
+    uint m_last_percentage_logged;
     std::string m_message;
+    std::ostream* m_stream = &std::cerr;
 
 public:
     void add_finished();
-    void print_progress_percentage(std::ostream& stream = std::cout);
+    void print_progress_percentage();
+    void set_stream(std::ostream& stream);
+
     ProgressMonitor() = delete;
-    ProgressMonitor(size_t num_tasks, const std::string& message = "Progress: ");
+    ProgressMonitor(size_t num_tasks, const std::string& message = "Progress: ", std::ostream& stream = std::cerr);
     ProgressMonitor(const ProgressMonitor&) = default;
     ProgressMonitor(ProgressMonitor&&) = default;
     ProgressMonitor& operator=(const ProgressMonitor&) = default;
@@ -38,22 +41,31 @@ inline void ProgressMonitor::add_finished() {
 }
 
 
-inline void ProgressMonitor::print_progress_percentage(std::ostream& stream) {
+inline void ProgressMonitor::print_progress_percentage() {
     std::lock_guard<std::mutex> lck(m_mtx);
-    float percentage = std::floor(float(m_finished_tasks)/float(m_num_tasks)*100.0);
+    uint percentage = (uint)std::floor(float(m_finished_tasks)/float(m_num_tasks)*100.0);
 
     if (percentage != m_last_percentage_logged) {
-        stream << m_message << percentage << "%\n";
+        if (m_stream != nullptr)
+            *m_stream << m_message << percentage << "%\n";
         m_last_percentage_logged = percentage;
     }
 }
 
 
-inline ProgressMonitor::ProgressMonitor(size_t num_tasks, const std::string& message)
+inline void ProgressMonitor::set_stream(std::ostream& stream) {
+    std::lock_guard<std::mutex> lck(m_mtx);
+    m_stream->flush();
+    m_stream = &stream;
+}
+
+
+inline ProgressMonitor::ProgressMonitor(size_t num_tasks, const std::string& message, std::ostream& stream)
     : m_num_tasks(num_tasks)
     , m_finished_tasks(0)
     , m_last_percentage_logged(0)
     , m_message(message)
+    , m_stream(&stream)
 {
 }
 
