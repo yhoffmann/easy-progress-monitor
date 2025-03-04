@@ -27,10 +27,10 @@ public:
 
     ProgressMonitor() = delete;
     ProgressMonitor(size_t num_tasks, const std::string& message = "Progress: ", std::ostream& stream = std::cerr);
-    ProgressMonitor(const ProgressMonitor&) = default;
-    ProgressMonitor(ProgressMonitor&&) = default;
-    ProgressMonitor& operator=(const ProgressMonitor&) = default;
-    ProgressMonitor& operator=(ProgressMonitor&&) = default;
+    ProgressMonitor(const ProgressMonitor&) = delete;
+    ProgressMonitor(ProgressMonitor&&) = delete;
+    ProgressMonitor& operator=(const ProgressMonitor&) = delete;
+    ProgressMonitor& operator=(ProgressMonitor&&) = delete;
     ~ProgressMonitor() = default;
 };
 
